@@ -7,12 +7,15 @@ using UnityEngine.Serialization;
 public class PlantTimer : MonoBehaviour
 {
     private float time = 0f;
-    private bool grown;
+    [SerializeField] public float halfTime;
+    [SerializeField] public float grownTime;
+
     [SerializeField] private Sprite notGrown;
     [SerializeField] private Sprite halfGrown;
     [SerializeField] private Sprite fullGrown;
     private SpriteRenderer spriteRenderer;
     
+    private bool grown;
     private bool bought = false;
 
     private void OnEnable()
@@ -24,7 +27,6 @@ public class PlantTimer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(time);
         if (!grown)
         {
             time += Time.deltaTime;
@@ -34,12 +36,12 @@ public class PlantTimer : MonoBehaviour
 
     private void ChangeSprite()
     {
-        if (time >= 15f && time < 30f)
+        if (time >= halfTime && time < grownTime)
         {
             spriteRenderer.sprite = halfGrown;
         }
 
-        if (time >= 30f)
+        if (time >= grownTime)
         {
             spriteRenderer.sprite = fullGrown;
             StopTimer();
